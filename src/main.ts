@@ -20,12 +20,15 @@ import { Contact, Message, Wechaty, WechatyBuilder } from "wechaty";
 
 import qrTerm from "qrcode-terminal";
 
+import { MentionHandler } from "./message/MentionHandler";
+import { NormalHandler } from "./message/NormalHandler";
+
 /**
  *
  * 1. Declare your Bot!
  *
  */
-const bot: Wechaty = WechatyBuilder.build({
+export const bot: Wechaty = WechatyBuilder.build({
   name: "typescript",
   puppet: "wechaty-puppet-wechat",
 });
@@ -92,14 +95,10 @@ function onError(e: Error) {
  *
  */
 async function onMessage(message: Message) {
-  await message.mentionSelf();
-  if (message.text() == "启动喝水提醒小助手") {
-    let contact = message.from();
-    let mention = "";
-    if (contact) {
-      mention = `@${contact.name()}`;
-    }
-    message.say(`干你妈的，启动失败${mention}`);
+  let mentionState = await message.mentionSelf();
+  if (mentionState) {
+    MentionHandler.ins.deal(message);
+  } else {
+    NormalHandler.ins.deal(message);
   }
-  console.log(message.toString());
 }

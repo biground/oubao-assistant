@@ -1,17 +1,17 @@
 {
-  "extends": "@chatie/tsconfig",
+  // "extends": "@chatie/tsconfig",
   "compilerOptions": {
-    "outDir": "dist"
+    "module": "ES6",
+    "moduleResolution": "node",
+    "target": "ES6",
+    "outDir": "dist",
+    "importHelpers": true
   },
-  "exclude": [
-    "node_modules/",
-    "dist/",
-    "tests/fixtures/"
-  ],
+  "exclude": ["node_modules/", "dist/", "tests/fixtures/"],
   "include": [
     "examples/*.ts",
     "scripts/**/*.ts",
     "src/**/*.ts",
     "tests/**/*.ts"
-  ],
+  ]
 }
